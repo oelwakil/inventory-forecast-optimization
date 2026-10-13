@@ -1,0 +1,136 @@
+{
+  "data_source": "Kaggle Store Item Demand Forecasting Challenge",
+  "splits": {
+    "train_end": "2016-06-30",
+    "val_end": "2016-12-31",
+    "test": [
+      "2017-01-01",
+      "2017-03-31"
+    ]
+  },
+  "simulation": {
+    "lead_time": 2,
+    "review_period": 1,
+    "holding_cost": 1.0,
+    "lost_sale_cost": 20.0
+  },
+  "lightgbm": {
+    "objective": "poisson",
+    "learning_rate": 0.1,
+    "bagging_freq": 1,
+    "verbose": -1,
+    "seed": 42,
+    "num_threads": 0,
+    "num_leaves": 127,
+    "min_data_in_leaf": 100,
+    "feature_fraction": 0.7,
+    "bagging_fraction": 0.9,
+    "lambda_l2": 1.0,
+    "rounds_validation": 518,
+    "rounds_final": 570
+  },
+  "validation_accuracy": {
+    "Seasonal naive (t-28)": {
+      "WAPE": 0.1835,
+      "MAE": 10.8392,
+      "RMSE": 14.2978,
+      "Bias": 0.0664
+    },
+    "Weekday average (4 wks)": {
+      "WAPE": 0.1644,
+      "MAE": 9.7114,
+      "RMSE": 12.726,
+      "Bias": 0.0748
+    },
+    "LightGBM": {
+      "WAPE": 0.1035,
+      "MAE": 6.115,
+      "RMSE": 7.9723,
+      "Bias": -0.012
+    }
+  },
+  "test_accuracy": {
+    "LightGBM": {
+      "WAPE": 0.1163,
+      "MAE": 5.329,
+      "RMSE": 6.9073,
+      "Bias": 0.0075
+    },
+    "Seasonal naive (t-28)": {
+      "WAPE": 0.1875,
+      "MAE": 8.5873,
+      "RMSE": 11.2833,
+      "Bias": -0.0716
+    },
+    "Weekday average (4 wks)": {
+      "WAPE": 0.1928,
+      "MAE": 8.8314,
+      "RMSE": 11.6463,
+      "Bias": -0.0473
+    }
+  },
+  "inventory_required": {
+    "Seasonal naive (t-28)": {
+      "on-hand @ 95% fill": 11.2896,
+      "on-hand @ 98% fill": 18.3252,
+      "on-hand @ 99% fill": 23.4051
+    },
+    "Weekday average (4 wks)": {
+      "on-hand @ 95% fill": 12.9784,
+      "on-hand @ 98% fill": 20.0216,
+      "on-hand @ 99% fill": 24.9646
+    },
+    "LightGBM": {
+      "on-hand @ 95% fill": 4.9693,
+      "on-hand @ 98% fill": 9.185,
+      "on-hand @ 99% fill": 12.5469
+    },
+    "Perfect foresight (bound)": {
+      "on-hand @ 95% fill": 0.3505,
+      "on-hand @ 98% fill": 0.3505,
+      "on-hand @ 99% fill": 0.3505
+    }
+  },
+  "inventory_reduction_vs_weekday_avg_pct": {
+    "Seasonal naive (t-28)": {
+      "on-hand @ 95% fill": 13.01,
+      "on-hand @ 98% fill": 8.47,
+      "on-hand @ 99% fill": 6.25
+    },
+    "LightGBM": {
+      "on-hand @ 95% fill": 61.71,
+      "on-hand @ 98% fill": 54.12,
+      "on-hand @ 99% fill": 49.74
+    }
+  },
+  "lowest_cost": {
+    "Seasonal naive (t-28)": {
+      "z": 1.6583,
+      "fill_rate": 0.9935,
+      "avg_on_hand": 26.3153,
+      "total_cost": 1452274.8334,
+      "cost_vs_weekday_avg_%": -4.473
+    },
+    "Weekday average (4 wks)": {
+      "z": 1.8125,
+      "fill_rate": 0.9933,
+      "avg_on_hand": 27.6149,
+      "total_cost": 1520276.6757,
+      "cost_vs_weekday_avg_%": 0.0
+    },
+    "LightGBM": {
+      "z": 1.35,
+      "fill_rate": 0.9954,
+      "avg_on_hand": 16.1634,
+      "total_cost": 915363.1743,
+      "cost_vs_weekday_avg_%": -39.7897
+    },
+    "Perfect foresight (bound)": {
+      "z": -0.5,
+      "fill_rate": 1.0,
+      "avg_on_hand": 0.3505,
+      "total_cost": 15772.0,
+      "cost_vs_weekday_avg_%": -98.9626
+    }
+  }
+}
