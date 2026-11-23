@@ -1,0 +1,243 @@
+{
+  "data_source": "Kaggle Store Item Demand Forecasting Challenge",
+  "config": {
+    "lead_time": 2,
+    "holding_cost": 1.0,
+    "lost_sale_cost": 20.0,
+    "order_cost_scenario_b": 100.0,
+    "n_seeds": 3,
+    "epochs": 12,
+    "ppo_iterations": {
+      "A": 150,
+      "B": 300
+    },
+    "level_anchor": "roll_mean_365"
+  },
+  "backtest_q1_2016": {
+    "LightGBM": {
+      "WAPE": 0.1208,
+      "MAE": 5.3318,
+      "RMSE": 6.9705,
+      "Bias": -0.0269
+    },
+    "Neural, level = 91-day mean": {
+      "WAPE": 0.1173,
+      "MAE": 5.1768,
+      "RMSE": 6.6958,
+      "Bias": 0.0057
+    },
+    "Neural, level = 365-day mean": {
+      "WAPE": 0.1171,
+      "MAE": 5.1704,
+      "RMSE": 6.689,
+      "Bias": 0.0042
+    }
+  },
+  "point_accuracy": {
+    "LightGBM (validation)": {
+      "WAPE": 0.1035,
+      "MAE": 6.115,
+      "RMSE": 7.9723,
+      "Bias": -0.012
+    },
+    "Neural (validation)": {
+      "WAPE": 0.101,
+      "MAE": 5.9658,
+      "RMSE": 7.7271,
+      "Bias": 0.0004
+    },
+    "LightGBM (test)": {
+      "WAPE": 0.1163,
+      "MAE": 5.329,
+      "RMSE": 6.9072,
+      "Bias": 0.0075
+    },
+    "Neural (test)": {
+      "WAPE": 0.1195,
+      "MAE": 5.4761,
+      "RMSE": 7.0624,
+      "Bias": 0.0398
+    }
+  },
+  "probabilistic_test": {
+    "LightGBM + normal": {
+      "CRPS": 3.8012,
+      "50% interval": 0.5618,
+      "80% interval": 0.8574,
+      "90% interval": 0.938,
+      "95% interval": 0.9714
+    },
+    "LightGBM + Poisson": {
+      "CRPS": 3.7654,
+      "50% interval": 0.4942,
+      "80% interval": 0.7936,
+      "90% interval": 0.8936,
+      "95% interval": 0.9444
+    },
+    "Neural negative binomial": {
+      "CRPS": 3.8427,
+      "50% interval": 0.4964,
+      "80% interval": 0.7971,
+      "90% interval": 0.8978,
+      "95% interval": 0.9472
+    }
+  },
+  "inventory_needed_test": {
+    "LightGBM + safety-stock rule": {
+      "on-hand @ 95% fill": 4.96,
+      "on-hand @ 98% fill": 9.188,
+      "on-hand @ 99% fill": 12.501,
+      "vs LightGBM rule @98% (%)": 0.0,
+      "95% CI": "[0.0, 0.0]"
+    },
+    "Neural + safety-stock rule": {
+      "on-hand @ 95% fill": 4.775,
+      "on-hand @ 98% fill": 8.871,
+      "on-hand @ 99% fill": 12.101,
+      "vs LightGBM rule @98% (%)": -3.425,
+      "95% CI": "[-3.9, -3.0]"
+    },
+    "LightGBM + Poisson quantile": {
+      "on-hand @ 95% fill": 4.959,
+      "on-hand @ 98% fill": 9.155,
+      "on-hand @ 99% fill": 12.427,
+      "vs LightGBM rule @98% (%)": -0.347,
+      "95% CI": "[-0.5, -0.2]"
+    },
+    "Neural + NB quantile": {
+      "on-hand @ 95% fill": 4.775,
+      "on-hand @ 98% fill": 8.865,
+      "on-hand @ 99% fill": 12.064,
+      "vs LightGBM rule @98% (%)": -3.49,
+      "95% CI": "[-4.0, -3.0]"
+    }
+  },
+  "deployable_cost_test": {
+    "LightGBM + safety-stock rule": {
+      "tuned on validation": "z = 1.7",
+      "test cost": 971606.291,
+      "fill rate": 0.998,
+      "avg on-hand": 19.744,
+      "best in hindsight": "z = 1.3",
+      "hindsight cost": 914535.462,
+      "tuning gap (%)": 6.24,
+      "vs LightGBM rule (%)": 0.0,
+      "95% CI": "[0.0, 0.0]",
+      "series cheaper": "0%"
+    },
+    "Neural + safety-stock rule": {
+      "tuned on validation": "z = 1.6",
+      "test cost": 997423.261,
+      "fill rate": 0.999,
+      "avg on-hand": 21.053,
+      "best in hindsight": "z = 1.05",
+      "hindsight cost": 892115.523,
+      "tuning gap (%)": 11.804,
+      "vs LightGBM rule (%)": 2.657,
+      "95% CI": "[2.2, 3.2]",
+      "series cheaper": "31%"
+    },
+    "LightGBM + Poisson quantile": {
+      "tuned on validation": "q = 0.958",
+      "test cost": 921967.0,
+      "fill rate": 0.997,
+      "avg on-hand": 17.721,
+      "best in hindsight": "q = 0.925",
+      "hindsight cost": 908392.0,
+      "tuning gap (%)": 1.494,
+      "vs LightGBM rule (%)": -5.109,
+      "95% CI": "[-5.5, -4.7]",
+      "series cheaper": "88%"
+    },
+    "Neural + NB quantile": {
+      "tuned on validation": "q = 0.925",
+      "test cost": 920462.0,
+      "fill rate": 0.998,
+      "avg on-hand": 18.325,
+      "best in hindsight": "q = 0.875",
+      "hindsight cost": 887116.0,
+      "tuning gap (%)": 3.759,
+      "vs LightGBM rule (%)": -5.264,
+      "95% CI": "[-5.7, -4.8]",
+      "series cheaper": "86%"
+    }
+  },
+  "perfect_foresight_cost": 15772.0,
+  "rl_scenario_a": {
+    "Base-stock, z = 1.6 (tuned on validation)": {
+      "test cost": 951874.5516,
+      "fill rate": 0.9983,
+      "avg on-hand": 19.6333,
+      "orders per series-day": 1.0
+    },
+    "RL residual on base-stock": {
+      "test cost": 941162.0053,
+      "fill rate": 0.9982,
+      "avg on-hand": 19.2565,
+      "orders per series-day": 1.0
+    },
+    "Base-stock, z = 1.1 (best in hindsight)": {
+      "test cost": 887777.6659,
+      "fill rate": 0.9949,
+      "avg on-hand": 15.0974,
+      "orders per series-day": 1.0
+    }
+  },
+  "rl_scenario_b": {
+    "Daily base-stock, z = 1.6 (tuned on validation)": {
+      "test cost": 5451874.5516,
+      "fill rate": 0.9983,
+      "avg on-hand": 19.6333,
+      "orders per series-day": 1.0,
+      "vs (s, S) tuned (%)": 22.507
+    },
+    "(s, S), tuned on validation": {
+      "test cost": 4450254.3983,
+      "fill rate": 0.9944,
+      "avg on-hand": 45.5778,
+      "orders per series-day": 0.4817,
+      "vs (s, S) tuned (%)": 0.0
+    },
+    "RL residual on (s, S)": {
+      "test cost": 4293936.2999,
+      "fill rate": 0.9963,
+      "avg on-hand": 44.1089,
+      "orders per series-day": 0.4789,
+      "vs (s, S) tuned (%)": -3.5126
+    },
+    "(s, S), best in hindsight on test": {
+      "test cost": 4442666.4538,
+      "fill rate": 0.9921,
+      "avg on-hand": 43.4513,
+      "orders per series-day": 0.4804,
+      "vs (s, S) tuned (%)": -0.1705
+    },
+    "s_S_validation": [
+      -0.5,
+      1.5
+    ],
+    "s_S_hindsight": [
+      -0.75,
+      1.5
+    ]
+  },
+  "rl_bootstrap": {
+    "Scenario A: RL vs base-stock": {
+      "cost change (%)": -1.125,
+      "95% CI low": -1.196,
+      "95% CI high": -1.053,
+      "share of series cheaper": 0.886
+    },
+    "Scenario B: RL vs (s, S)": {
+      "cost change (%)": -3.513,
+      "95% CI low": -3.88,
+      "95% CI high": -3.13,
+      "share of series cheaper": 0.774
+    }
+  },
+  "ppo_best_iteration": {
+    "A": 120,
+    "B": 290
+  },
+  "runtime_seconds": 913.3428568840027
+}
